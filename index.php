@@ -7,8 +7,8 @@
         <title>Pozi Mobile</title>
         <link rel="stylesheet" href="style.mobile.css" type="text/css">
         <link rel="stylesheet" href="/touch/resources/css/sencha-touch.css">
-        <link href="http://www.pozi.com/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    	<link href="http://www.pozi.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
     	
     	<script>
     	
@@ -364,9 +364,9 @@
 		</div>
 	</div>
 	
-	<script src="http://www.pozi.com/bootstrap/js/bootstrap-dropdown.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap-dropdown.js" type="text/javascript"></script>
 	<script src="bootstrap-modal.js" type="text/javascript"></script>
-	<script src="http://v3.pozi.com/bootstrap/js/bootstrap-tooltip.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap-tooltip.js" type="text/javascript"></script>
 	
 	</body>
 	
