@@ -6,9 +6,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Pozi Mobile</title>
         <link rel="stylesheet" href="style.mobile.css" type="text/css">
-        <link rel="stylesheet" href="/touch/resources/css/sencha-touch.css">
-        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="touch/resources/css/sencha-touch.css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     	
     	<script>
     	
@@ -17,7 +16,7 @@
     	</script>
     	
     	<script src="OpenLayers.mobile.js" type="text/javascript"></script>
-        <script src="/touch/sencha-touch.js" type="text/javascript"></script>
+        <script src="touch/sencha-touch.js" type="text/javascript"></script>
         <script src="mobile-sencha.js" type="text/javascript"></script>
         <script src="mobile-base.js" type="text/javascript"></script>
         
@@ -364,9 +363,15 @@
 		</div>
 	</div>
 	
-	<script src="bootstrap/js/bootstrap-dropdown.js" type="text/javascript"></script>
-	<script src="bootstrap-modal.js" type="text/javascript"></script>
-	<script src="bootstrap/js/bootstrap-tooltip.js" type="text/javascript"></script>
+	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+
+        $(document).ready(function() {
+            $(".modal-backdrop").off("click");
+        });
+    	
+    </script>
 	
 	</body>
 	
