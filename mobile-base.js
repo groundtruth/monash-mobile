@@ -31,7 +31,7 @@ var init = function () {
     });
  
     wmsLayer = new OpenLayers.Layer.WMS("Vacant Land",
- 	["http://v3.pozi.com/geoserver/MONASH/ows"],
+ 	["http://monash.pozi.com/geoserver/MONASH/ows"],
 	{layers: 'MONASH:VACANTLANDLIST',format: 'image/png8', transparent:'true'},
 	{isBaseLayer:false,singleTile: true, ratio: 1.5, opacity: '1.0'}
     );
@@ -60,18 +60,18 @@ var init = function () {
         ],
         layers: [
             new OpenLayers.Layer.WMS("Monash Map",
- 	                        ["http://v3.pozi.com/geoserver/MONASH/ows"],
+ 	                        ["http://monash.pozi.com/geoserver/MONASH/ows"],
                      		{layers: 'MONASH:MONMAP31',format: 'image/png8', transparent:'true'},
  				{isBaseLayer:false,singleTile: true, ratio: 1.5, opacity: '0.6'}
                      ),
             wmsLayer,
             new OpenLayers.Layer.WMS("Labels",
- 	                        ["http://m1.pozi.com/geoserver/wms","http://m2.pozi.com/geoserver/wms","http://m3.pozi.com/geoserver/wms","http://m4.pozi.com/geoserver/wms"],
+ 	                        ["http://basemap1.pozi.com/geoserver/wms","http://basemap2.pozi.com/geoserver/wms","http://basemap3.pozi.com/geoserver/wms","http://basemap4.pozi.com/geoserver/wms"],
                      		{layers: 'LabelClassic',format: 'image/png8',transparent:'true'},
  				{isBaseLayer:false,singleTile: true, ratio: 1.5}
                      ),
             new OpenLayers.Layer.WMS("Vicmap Classic",
- 	                        ["http://m1.pozi.com/geoserver/gwc/service/wms","http://m2.pozi.com/geoserver/gwc/service/wms","http://m3.pozi.com/geoserver/gwc/service/wms","http://m4.pozi.com/geoserver/gwc/service/wms"],
+ 	                        ["http://basemap1.pozi.com/geoserver/gwc/service/wms","http://basemap2.pozi.com/geoserver/gwc/service/wms","http://basemap3.pozi.com/geoserver/gwc/service/wms","http://basemap4.pozi.com/geoserver/gwc/service/wms"],
                      		{layers: 'VicmapClassic',format: 'image/png8'}
                     ),
             new OpenLayers.Layer.OSM("OpenStreetMap", null, {
