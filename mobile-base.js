@@ -31,7 +31,7 @@ var init = function () {
     });
  
     wmsLayer = new OpenLayers.Layer.WMS("Vacant Land",
- 	["http://monash.pozi.com/geoserver/MONASH/ows"],
+ 	["/geoserver/MONASH/ows"],
 	{layers: 'MONASH:VACANTLANDLIST',format: 'image/png8', transparent:'true'},
 	{isBaseLayer:false,singleTile: true, ratio: 1.5, opacity: '1.0'}
     );
@@ -60,7 +60,7 @@ var init = function () {
         ],
         layers: [
             new OpenLayers.Layer.WMS("Monash Map",
- 	                        ["http://monash.pozi.com/geoserver/MONASH/ows"],
+ 	                        ["/geoserver/MONASH/ows"],
                      		{layers: 'MONASH:MONMAP31',format: 'image/png8', transparent:'true'},
  				{isBaseLayer:false,singleTile: true, ratio: 1.5, opacity: '0.6'}
                      ),

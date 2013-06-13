@@ -253,7 +253,7 @@ App.CaptureFormPopupPanel = Ext.extend(Ext.Panel, {
 		vacantLandStore = new Ext.data.JsonStore({
 			proxy: {
 				type: 'scripttag',
-				url : 'http://monash.pozi.com/ws/rest/v3/ws_closest_vacant_land.php',
+				url : '/ws/rest/v3/ws_closest_vacant_land.php',
 				reader: {
 					type: 'json',
 					root: 'rows',
