@@ -59,7 +59,7 @@ App.SearchFormPopupPanel = Ext.extend(Ext.Panel, {
         this.store.load({
             params: {
                 query: q,
-                config: 'vicmap',
+                config: 'basemap',
                 lga:'348'
             }
         });
