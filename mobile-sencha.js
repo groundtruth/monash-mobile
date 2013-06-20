@@ -14,7 +14,7 @@ App.SearchFormPopupPanel = Ext.extend(Ext.Panel, {
     scroll: false,
     layout: 'fit',
     fullscreen: Ext.is.Phone ? true : undefined,
-    url: 'http://s1.pozi.com/ws/rest/v3/ws_all_features_by_string_and_lga.php',
+    url: 'http://basemap.pozi.com/ws/rest/v3/ws_all_features_by_string_and_lga.php',
     errorText: 'Sorry, we had problems communicating with Pozi search. Please try again.',
     errorTitle: 'Communication error',
     maxResults: 6,
@@ -221,7 +221,6 @@ App.CaptureFormPopupPanel = Ext.extend(Ext.Panel, {
 	scroll: false,
 	layout: 'fit',
 	fullscreen: Ext.is.Phone ? true : undefined,
-	//    url: '/ws/rest/v3/capture/ws_property_fire_hazard.php',
 	errorText: 'Sorry, we had problems communicating with the Pozi server. Please try again.',
 	errorTitle: 'Communication error',
         
