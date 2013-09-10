@@ -1,5 +1,8 @@
 Ext.ns('App');
 
+// Allows cross-domain requests for the restful_geof call in onItemTap
+Ext.Ajax.useDefaultXhrHeader = false;
+
 /**
  * Custom class for the Search 
  */
@@ -14,7 +17,7 @@ App.SearchFormPopupPanel = Ext.extend(Ext.Panel, {
     scroll: false,
     layout: 'fit',
     fullscreen: Ext.is.Phone ? true : undefined,
-    url: 'http://basemap.pozi.com/ws/rest/v3/ws_all_features_by_string_and_lga.php',
+    url: 'http://basemap.pozi.com/ws/rest/v3/ws_search_api_wrapper.php',
     errorText: 'Sorry, we had problems communicating with Pozi search. Please try again.',
     errorTitle: 'Communication error',
     maxResults: 6,
@@ -22,36 +25,29 @@ App.SearchFormPopupPanel = Ext.extend(Ext.Panel, {
     
     createStore: function(){
         this.store = new Ext.data.JsonStore({
-			autoLoad: false, //autoload the data
-			root: 'rows',
-			fields: [{name: "label"	, mapping:"row.label"},
-				{name: "xmini"	, mapping:"row.xmini"},
-				{name: "ymini"	, mapping:"row.ymini"},
-	 			{name: "xmaxi"	, mapping:"row.xmaxi"},
-				{name: "ymaxi"	, mapping:"row.ymaxi"},
-				{name: "gsns"	, mapping:"row.gsns"},
-	 			{name: "gsln"	, mapping:"row.gsln"},
-	 			{name: "idcol"	, mapping:"row.idcol"},
-	 			{name: "idval"	, mapping:"row.idval"},
-	 			{name: "ld"	, mapping:"row.ld"}
-	 		],
-			proxy: {
-				type: 'scripttag',
-				timeout: 5000,
-				listeners: {
-					exception: function(){
-						this.hide();
-						Ext.Msg.alert(this.errorTitle, this.errorText, Ext.emptyFn);
-					},
-					scope: this
-				},
-				url: this.url,
-				reader: {
-					type: 'json',
-					root: 'rows'
-				}
-			}
-	});
+            autoLoad: false, //autoload the data
+            root: 'features',
+            fields: [{name: "label" , mapping:"properties.label"},
+                {name: "gsln"   , mapping:"properties.gsln"},
+                {name: "idcol"  , mapping:"properties.idcol"},
+                {name: "idval"  , mapping:"properties.idval"},
+                {name: "ld" , mapping:"properties.ld"}
+            ],
+              proxy: new Ext.data.ScriptTagProxy({
+                url: this.url,
+                timeout: 5000,
+                listeners: {
+                    exception: function(){
+                        this.hide();
+                        Ext.Msg.alert(this.errorTitle, this.errorText, Ext.emptyFn);
+                    },
+                    scope: this
+                },
+                reader:{
+                    root:'features'
+                }
+              })
+    });
     },
     
     doSearch: function(searchfield, evt){
@@ -67,16 +63,40 @@ App.SearchFormPopupPanel = Ext.extend(Ext.Panel, {
     
     onItemTap: function(dataView, index, item, event){
         var record = this.store.getAt(index);
-        var xmin = record.get('xmini');
-        var ymin = record.get('ymini');
-        var xmax = record.get('xmaxi');
-        var ymax = record.get('ymaxi');    
-        var x = xmin/2+xmax/2;
-        var y = ymin/2+ymax/2;
-        //alert("Moving to x:"+x+" y:"+y);
-        var lonlat = new OpenLayers.LonLat(xmin/2+xmax/2, ymin/2+ymax/2);
-        map.setCenter(lonlat.transform(gg, sm), 18);
-        this.hide("pop");
+
+        var url_object = "http://basemap.pozi.com/api/v1/basemap/" + record.data.gsln + "/" + record.data.idcol +  "/is/" + encodeURIComponent(record.data.idval);
+        if (record.data.lgacol && record.data.lga)
+        {
+            url_object += "/"+ record.data.lgacol +"/in/" + record.data.lga;
+        }
+
+        Ext.Ajax.request({
+            method: "GET",
+            url: url_object,
+            params: {},
+            callback: function(options, success, response) {
+                var status = response.status;
+                if (status >= 200 && status < 403 && response.responseText) {
+                    // We then feed the object returned into the highlight layer
+                    var geojson_format = new OpenLayers.Format.GeoJSON({
+                        'internalProjection': new OpenLayers.Projection("EPSG:900913"),
+                        'externalProjection': new OpenLayers.Projection("EPSG:4326")
+                    });
+                    var geojson = geojson_format.read(response.responseText);
+
+                    // Calculating the overall envelope of all objects returned
+                    var envelope = geojson[0].geometry.getBounds();
+                    for (var i=1;i<geojson.length;i++)
+                    {
+                        envelope.extend(geojson[i].geometry.getBounds());
+                    }
+
+                    var lonlat = new OpenLayers.LonLat((envelope.left + envelope.right) / 2, (envelope.top + envelope.bottom) / 2);
+                    map.setCenter(lonlat, 18);
+                    app.searchFormPopupPanel.hide("pop");
+                }
+            }
+        });
     },
     
     initComponent: function(){
